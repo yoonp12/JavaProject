@@ -31,6 +31,7 @@ public class Post {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
+	private String filePath;
 	private String description;
 	
 	// MANY TO MANY ( MANY POSTS LIKED BY MANY USERS)
@@ -67,7 +68,8 @@ public class Post {
     public Post() {
     }
     
-    public Post(String description) {
+    public Post(String filePath, String description) {
+    	setFilePath(filePath);
     	setDescription(description);
     }
     
@@ -86,6 +88,14 @@ public class Post {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getFilePath() {
+		return filePath;
+	}
+
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
 	}
 
 	public String getDescription() {
