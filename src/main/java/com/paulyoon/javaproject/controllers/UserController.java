@@ -27,24 +27,28 @@ public class UserController {
 	private UserValidator userVal;
 	
 	
-	@GetMapping("/")
+	@GetMapping("/login")
 	public String LoginReg(@ModelAttribute("user") User user) {
-		return "dashboard.jsp";
+		return "login.jsp";
 	}
 	
+	@GetMapping("/register")
+	public String Register(@ModelAttribute("user") User user) {
+		return "registration.jsp";
+	}
 	
 	//  REGISTER USER
 	@PostMapping(value="/register")
 	public String Register(@Valid @ModelAttribute("user") User user, BindingResult result, HttpSession session, Model model) {
 		userVal.validate(user, result);
 		if(result.hasErrors()) {
-			return "loginReg.jsp";
+			return "registration.jsp";
 		}else {
 			User userObj = userServ.registerUser(user);
 			session.setAttribute("users", userObj);
 			Long userId = user.getId();
 			session.setAttribute("userId", userId);
-			return "redirect:/courses";
+			return "redirect:/new";
 		}
 	}
 	
@@ -59,7 +63,7 @@ public class UserController {
 			return "redirect:/courses";
 		}else {
 			model.addAttribute("error", "Invalid Username or Password, please try again");
-			return "/loginReg.jsp";
+			return "/login.jsp";
 		}
 	}
 	
