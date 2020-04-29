@@ -35,6 +35,7 @@ public class MainController {
 	@GetMapping("/new")
 	public String newPost() {
 		return "/PostImg/PostPage.jsp";
+
 	}
 	//  CREATE POST METHOD
 	@PostMapping(value="/newPost")
