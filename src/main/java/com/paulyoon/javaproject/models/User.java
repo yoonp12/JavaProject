@@ -37,6 +37,8 @@ public class User {
     private String email;
     @Size(min=5, message="Password must be greater than 5 characters")
     private String password;
+    @Size(min=1, max=500, message="Bio must be less than 500 characters")
+	private String bio;
     @Transient
     private String passwordConfirmation;
     @Transient 
@@ -66,11 +68,12 @@ public class User {
     public User() {
     }
     
-    public User(String name, String userName, String email, String password) {
+    public User(String name, String userName, String email, String password, String bio) {
     	setName(name);
     	setUserName(userName);
     	setEmail(email);
     	setPassword(password);
+    	setBio(bio);
     }
     
     @PrePersist
@@ -176,6 +179,14 @@ public class User {
 
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+	
+	public String getBio() {
+		return bio;
+	}
+	
+	public void setBio(String bio) {
+		this.bio = bio;
 	}
 
     

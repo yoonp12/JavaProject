@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.paulyoon.javaproject.models.User;
@@ -60,10 +61,10 @@ public class UserController {
 		if(userObj == true) {
 			User userInfo = userServ.findByEmail(email);
 			session.setAttribute("userId", userInfo.getId());
-			return "redirect:/courses";
+			return "redirect:/profile";
 		}else {
 			model.addAttribute("error", "Invalid Username or Password, please try again");
-			return "/login.jsp";
+			return "login.jsp";
 		}
 	}
 	
@@ -74,15 +75,31 @@ public class UserController {
 		Long userId = (Long) session.getAttribute("userId");
 		User user = userServ.findUserById(userId);
 		model.addAttribute("user", user);
-		return "user.jsp";
+		return "profile.jsp";
 	}
+	
+	// UPDATE USER PROFILE 
+	
+	@GetMapping("/update")
+	public String Update() {
+		return "update.jsp";
+	}
+	@PostMapping(value="/profile/edit")
+	public String EditProfile(@RequestParam("bio")String bio, HttpSession session) {
+		Long id = (Long)session.getAttribute("userId");
+		User userObj = userServ.findUserById(id);
+		userObj.setBio(bio);
+		userServ.updateUser(userObj);
+		return "redirect:/profile";
+	}
+	
 	
 	
 	//  LOGOUT 
 	@GetMapping("/logout")
 	public String Logout(HttpSession session) {
 		session.invalidate();
-		return "redirect:/";
+		return "redirect:/login";
 	}
 	
 }

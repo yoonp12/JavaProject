@@ -31,7 +31,7 @@
 						<a class="nav-link navFont m-2" href="#">Post <span class="sr-only">(current)</span></a>
 					</li>
 					<li class="nav-item active">
-						<a class="nav-link navFont m-2" href="#">Logout <span class="sr-only">(current)</span></a>
+						<a class="nav-link navFont m-2" href="/logout">Logout <span class="sr-only">(current)</span></a>
 					</li>
 				</ul>
 			</div>

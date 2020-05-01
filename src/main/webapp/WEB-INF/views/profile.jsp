@@ -38,7 +38,7 @@
 						<a class="nav-link navFont m-2" href="#">Post <span class="sr-only">(current)</span></a>
 					</li>
 					<li class="nav-item active">
-						<a class="nav-link navFont m-2" href="#">Logout <span class="sr-only">(current)</span></a>
+						<a class="nav-link navFont m-2" href="/logout">Logout <span class="sr-only">(current)</span></a>
 					</li>
 				</ul>
 			</div>
@@ -64,12 +64,13 @@
 						<h5 class="card-title " id="friendsList">User</h5>
 						<img src="..." alt="..." class="rounded-circle">
 						<div class="list-group list-group-flush">
-							<div>Name:</div>
+						
+							<div>Name:<c:out value="${user.name }" /></div>
 							<hr />
-							<div>Email:</div>
+							<div>Email:<c:out value="${user.email }" /></div>
 							<hr />
-							<div>Bio:</div>
-							
+							<div>Bio:<c:out value="${user.bio }" /></div>
+						
 						</div>
 					</div>
 				</div>
