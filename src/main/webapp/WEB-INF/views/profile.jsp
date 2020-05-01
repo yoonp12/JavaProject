@@ -145,6 +145,8 @@
 							
 						</div>
 					<!-- Add Pagination -->
+						<br />
+						<br />
 						<div class="swiper-pagination pt-5"></div>
 					</div>
 					
