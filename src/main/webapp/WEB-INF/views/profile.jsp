@@ -103,7 +103,7 @@
 							
 						</div>
 					<!-- Add Pagination -->
-						<div class="swiper-pagination "></div>
+						<div class="swiper-pagination pt-5"></div>
 					</div>
 					
 					<!-- USER'S POSTS CAROUSEL END -->

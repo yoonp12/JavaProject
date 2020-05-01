@@ -118,7 +118,7 @@
 							</div>
 						</c:forEach>
 					<!-- Add Pagination -->
-						<div class="swiper-pagination"></div>
+						<div class="swiper-pagination mt-5"></div>
 					</div>
 				</div>
 			
