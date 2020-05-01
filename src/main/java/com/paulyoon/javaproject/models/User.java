@@ -1,5 +1,6 @@
 package com.paulyoon.javaproject.models;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -18,7 +19,6 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -32,6 +32,7 @@ public class User {
 	private String name;
 	@Size(min=8, message="Name must be at least 8 characters long")
 	private String userName;
+	private String filePath;
     @Email(message="Email must be valid")
     @Size(min=2, message="Email must be at least 2 characters long")
     private String email;
@@ -43,6 +44,8 @@ public class User {
     private String passwordConfirmation;
     @Transient 
     private boolean duplicate;
+    
+    private ArrayList<User> friends;
     
     //MANY TO MANY ( MANY USERS LIKE MANY POSTS )
     @ManyToMany(fetch = FetchType.LAZY)
@@ -68,12 +71,14 @@ public class User {
     public User() {
     }
     
-    public User(String name, String userName, String email, String password, String bio) {
+    public User(String name, String userName, String filePath, String email, String password, String bio, ArrayList<User>friends) {
     	setName(name);
     	setUserName(userName);
     	setEmail(email);
     	setPassword(password);
     	setBio(bio);
+    	setFriends(friends);
+    	setFilePath(filePath);
     }
     
     @PrePersist
@@ -188,6 +193,24 @@ public class User {
 	public void setBio(String bio) {
 		this.bio = bio;
 	}
+
+	public ArrayList<User> getFriends() {
+		return friends;
+	}
+
+	public void setFriends(ArrayList<User> friends) {
+		this.friends = friends;
+	}
+
+	public String getFilePath() {
+		return filePath;
+	}
+
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
+	}
+	
+	
 
     
 }

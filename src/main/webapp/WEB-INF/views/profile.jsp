@@ -8,7 +8,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
+	<title>Profile</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
@@ -18,11 +18,15 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine" />
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Pacifico" />
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah" />
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Varela+Round" />
 	<link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.css">
 	<link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css">
 	
 	<script src="https://unpkg.com/swiper/js/swiper.js"></script>
 	<script src="https://unpkg.com/swiper/js/swiper.min.js"></script>
+	
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	
 </head>
 <body>
@@ -38,12 +42,15 @@
 						<a class="nav-link navFont m-2" href="/new">Post <span class="sr-only">(current)</span></a>
 					</li>
 					<li class="nav-item active">
+						<a class="nav-link navFont m-2" href="/dashboard">Dashboard <span class="sr-only">(current)</span></a>
+					</li>
+					<li class="nav-item active">
 						<a class="nav-link navFont m-2" href="/logout">Logout <span class="sr-only">(current)</span></a>
 					</li>
 				</ul>
 			</div>
 			<div>
-				<h3 id="projectTitle">PiClique</h3>
+				<h3 id="projectTitle">PicShare</h3>
 			</div>
 			<div>
 				<form action="" method="post" class="form-inline my-2 my-lg-0">
@@ -61,15 +68,26 @@
 			<div class="w-25">
 				<div class="card border-0" id="dashBody1">
 					<div class="card-body border-right">
-						<h5 class="card-title " id="friendsList">User</h5>
-						<img src="..." alt="..." class="rounded-circle">
+						<div class="text-center mb-5">
+							<h5 class="card-title text-center mb-4" id="friendsList"><c:out value="${user.name }" /></h5>
+							<img src="${user.filePath}" alt="..." class="img-thumbnail" style="width:100%; height:100%;">
+						</div>
 						<div class="list-group list-group-flush">
-						
-							<div>Name:<c:out value="${user.name }" /></div>
 							<hr />
-							<div>Email:<c:out value="${user.email }" /></div>
+							<div>
+								<h6>Username:</h6>
+								<h5><c:out value="${user.userName }" /></h5>
+							</div>
 							<hr />
-							<div>Bio:<c:out value="${user.bio }" /></div>
+							<div>
+								<h6>Email:</h6>
+								<h5><c:out value="${user.email }" /></h5>
+							</div>
+							<hr />
+							<div>
+								<h6>Bio:</h6>
+								<h5><c:out value="${user.bio }" /></h5>
+							</div>
 						
 						</div>
 					</div>
@@ -92,19 +110,32 @@
 							<div class="swiper-slide post-slide">
 								<div class="card rounded-lg">
 									<img src="${post.filePath}" width="400" height="400" class="mb-4 ">
-									<h5><c:out value="${post.description }" /></h5>
-								<div class="flex-wrap">
+									<h5 class="postDesc"><c:out value="${post.description }" /></h5>
+								<%-- <div class="flex-wrap">
 									<c:forEach var="post" items="${posts}">
 										<p>#<c:out value="${post.tags}" />, </p>
-									</c:forEach>
-								</div>
+									</c:forEach> 
+								</div> --%>
+									
+										<form:form action="/post/${post.id }" method="post" >
+											<div class="text-center">
+												
+												<button class="border-0" value="Delete">
+													<i class="material-icons" id="like">delete_forever</i>
+												</button>
+												<input type="hidden" name="_method" value="delete">
+											</div>
+										</form:form>
+		
 								</div>
 							</div>
 						</c:forEach>
 							
 						</div>
+						
 					<!-- Add Pagination -->
-						<div class="swiper-pagination "></div>
+						<div class="swiper-pagination pt-5"></div>
+						
 					</div>
 					
 					<!-- USER'S POSTS CAROUSEL END -->

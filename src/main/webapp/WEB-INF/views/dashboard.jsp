@@ -8,7 +8,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
+	<title>Dashboard</title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
@@ -31,12 +31,15 @@
 						<a class="nav-link navFont m-2" href="/new">Post <span class="sr-only">(current)</span></a>
 					</li>
 					<li class="nav-item active">
+						<a class="nav-link navFont m-2" href="/dashboard">Dashboard <span class="sr-only">(current)</span></a>
+					</li>
+					<li class="nav-item active">
 						<a class="nav-link navFont m-2" href="/logout">Logout <span class="sr-only">(current)</span></a>
 					</li>
 				</ul>
 			</div>
 			<div>
-				<h3 id="projectTitle">PiClique</h3>
+				<h3 id="projectTitle">PicShare</h3>
 			</div>
 			<div>
 				<form action="" method="post" class="form-inline my-2 my-lg-0">
@@ -56,11 +59,13 @@
 				<div class="card border-0" id="dashBody">
 					<div class="card-body border-right">
 						<h5 class="card-title " id="friendsList">My Clique</h5>
+					
 						<ul class="list-group list-group-flush">
-							<li class="list-group-item">Friend #1</li>
-							<li class="list-group-item">Friend #2</li>
-							<li class="list-group-item">Friend #3</li>
+							<c:forEach var="friend" items="${friends}" >
+								<li class="list-group-item" ><a href="/profile/${friend.id}"><c:out value="${friend.name}" /></a></li>
+							</c:forEach>
 						</ul>
+						
 					</div>
 				</div>
 			</div>
@@ -70,50 +75,20 @@
 			<div class="w-75">
 				<div class="card border-0" id="dashBody">
 					<div class="card-body d-flex flex-wrap ">
-						<div class="card m-3" id="posts">
-							<img src="" alt="" />
-							<h1>hello</h1>
-						</div>
-						<div class="card m-3" id="posts">
-							<img src="" alt="" />
-							<h1>hello</h1>
-						</div>
-						<div class="card m-3" id="posts">
-							<img src="" alt="" />
-							<h1>hello</h1>
-						</div>
-						<div class="card m-3" id="posts">
-							<img src="" alt="" />
-							<h1>hello</h1>
-						</div>
-						<div class="card m-3" id="posts">
-							<img src="" alt="" />
-							<h1>hello</h1>
-						</div>
-						<div class="card m-3" id="posts">
-							<img src="" alt="" />
-							<h1>hello</h1>
-						</div>
-						<div class="card m-3" id="posts">
-							<img src="" alt="" />
-							<h1>hello</h1>
-						</div>
-						<div class="card m-3" id="posts">
-							<img src="" alt="" />
-							<h1>hello</h1>
-						</div>
-						<div class="card m-3" id="posts">
-							<img src="" alt="" />
-							<h1>hello</h1>
-						</div>
-						<div class="card m-3" id="posts">
-							<img src="" alt="" />
-							<h1>hello</h1>
-						</div>
-						<div class="card m-3" id="posts">
-							<img src="" alt="" />
-							<h1>hello</h1>
-						</div>
+					
+						<c:forEach var="post" items="${posts}">
+							<div class="card m-3" id="posts" >
+								<a href="/post/${post.id}"><img src="${post.filePath}" alt="" width="180" height="190"/></a>
+								<h5><c:out value="${post.description }" /></h5>
+								<div style="text-align: center">
+									<form:form action="/post/${post.id }" method="post" >
+										<input type="hidden" name="_method" value="delete">
+										<button class="btn btn-danger btn-sm" type="submit" value="Delete">Delete</button>
+									</form:form>
+								</div>
+							</div>
+							
+						</c:forEach>
 
 					</div>
 				</div>

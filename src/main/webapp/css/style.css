@@ -16,6 +16,10 @@
 	background-color:#6782B4;
 	border: solid 1px white;
 }
+.postDesc{
+	font-family: 'Varela Round', serif;
+	font-weight: 600;
+}
 #dashBody{
 	height: 100%;
 }
@@ -34,7 +38,7 @@
 }
 #friendsList{
 	font-family: 'Pacifico', serif;
-	font-size: 20px;
+	font-size: 30px;
 	text-shadow: 4px 4px 4px #aaa;
 	font-weight: 200;
 }
@@ -62,7 +66,7 @@
 	background-position: center;
 	background-size: cover;
 	width: 300px;
-	height: 400px;
+	height: 500px;
 	
 	/* Center slide text vertically */
     display: -webkit-box;
