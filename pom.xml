@@ -22,6 +22,12 @@
 	<dependencies>
 	
 		<dependency>
+		   <groupId>com.amazonaws</groupId>
+		   <artifactId>aws-java-sdk</artifactId>
+		   <version>1.11.133</version>
+		</dependency>
+	
+		<dependency>
 			<groupId>org.glassfish</groupId>
 			<artifactId>javax.json</artifactId>
 			<version>1.0.4</version>
