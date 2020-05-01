@@ -18,6 +18,7 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine" />
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Pacifico" />
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah" />
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Varela+Round" />
 	<link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.css">
 	<link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css">
 	
@@ -36,6 +37,9 @@
 					</li>
 					<li class="nav-item active">
 						<a class="nav-link navFont m-2" href="/new">Post <span class="sr-only">(current)</span></a>
+					</li>
+					<li class="nav-item active">
+						<a class="nav-link navFont m-2" href="/dashboard">Dashboard <span class="sr-only">(current)</span></a>
 					</li>
 					<li class="nav-item active">
 						<a class="nav-link navFont m-2" href="/logout">Logout <span class="sr-only">(current)</span></a>
@@ -61,15 +65,26 @@
 			<div class="w-25">
 				<div class="card border-0" id="dashBody1">
 					<div class="card-body border-right">
-						<h5 class="card-title " id="friendsList">User</h5>
-						<img src="..." alt="..." class="rounded-circle">
+						<div class="text-center mb-5">
+							<h5 class="card-title text-center mb-4" id="friendsList"><c:out value="${user.name }" /></h5>
+							<img src="${user.filePath}" alt="..." class="rounded-circle" width="200" height="180">
+						</div>
 						<div class="list-group list-group-flush">
-						
-							<div>Name:<c:out value="${user.name }" /></div>
 							<hr />
-							<div>Email:<c:out value="${user.email }" /></div>
+							<div>
+								<h6>Username:</h6>
+								<h5><c:out value="${user.userName }" /></h5>
+							</div>
 							<hr />
-							<div>Bio:<c:out value="${user.bio }" /></div>
+							<div>
+								<h6>Email:</h6>
+								<h5><c:out value="${user.email }" /></h5>
+							</div>
+							<hr />
+							<div>
+								<h6>Bio:</h6>
+								<h5><c:out value="${user.bio }" /></h5>
+							</div>
 						
 						</div>
 					</div>
@@ -92,7 +107,7 @@
 							<div class="swiper-slide post-slide">
 								<div class="card rounded-lg">
 									<img src="${post.filePath}" width="400" height="400" class="mb-4 ">
-									<h5><c:out value="${post.description }" /></h5>
+									<h5 class="postDesc"><c:out value="${post.description }" /></h5>
 								<div class="flex-wrap">
 									<c:forEach var="post" items="${posts}">
 										<p>#<c:out value="${post.tags}" />, </p>
@@ -104,7 +119,7 @@
 							
 						</div>
 					<!-- Add Pagination -->
-						<div class="swiper-pagination "></div>
+						<div class="swiper-pagination pt-5"></div>
 					</div>
 					
 					<!-- USER'S POSTS CAROUSEL END -->

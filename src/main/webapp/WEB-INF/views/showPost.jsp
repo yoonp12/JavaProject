@@ -13,15 +13,11 @@
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-	<link rel="stylesheet" href="css/style.css" />
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" />
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine" />
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Pacifico" />
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah" />
-	<link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.css">
-	<link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css">
 	
-	<script src="https://unpkg.com/swiper/js/swiper.js"></script>
-	<script src="https://unpkg.com/swiper/js/swiper.min.js"></script>
 </head>
 <body>
 	<div class="container">
@@ -55,41 +51,60 @@
 			</div>
 			
 		</nav>
-		<!-- NAVBAR END -->
-		
-		
-		<!-- DASHBOARD BODY -->
-		<div class="">
-		
-			<div class="d-flex justify-content-center mb-5">
-				<div class="card w-50 border-0">
-					<h1 id="userPostFont" class="mb-3">Create Post:</h1>
+	<!-- NAVBAR END-->
+	
+		<div class="d-flex justify-content-around mt-5">
+			<div class="w-50">
+				<h3 id="userPostFont" class="text-center">Poster Board</h3>	
+				<div class="card border-0" id="dashBody">
+					<div class="card-body d-flex justify-content-center ">
 					
-					<form method="post" action="/newPost" enctype="multipart/form-data" >
-						<div class="form-group">
-							<label for="file">Image/File:</label>
-							<input type="file" name="file">
+					<!--POST INFO -->
+
+
+						<div class="card rounded-lg">
+							<img src="${posts.filePath}" width="400" height="400" class="mb-4 ">
+							<h5 class="text-center"><c:out value="${posts.description }" /></h5>
 						</div>
-						<div class="form-group">
-							<label for="description">Caption:</label>
-							<textarea class="form-control" rows="3" name="description"></textarea>
-						</div>      
-						
-						<div class="form-group">
-							<label for="tags">HashTags:</label>
-							<input type="text" name="tags" placeholder="Seperate by commas">
-						</div>    
-	                    <div class="text-right">
-	                    	<button type="submit" class="btn my-2 my-sm-0 btn btn-outline-light allBtns" >Post!</button>
-	                    </div>
-                    </form>
-					
+
+					</div>
+					<!--POST INFO-->
 				</div>
 			</div>
 			
+			<div class="w-50 mt-5">
+				<h3 id="userPostFont" class="text-center">Comments</h3>	
+				<div class="card border-0" id="dashBody">
+					<div class="card-body d-flex justify-content-center ">
+					
+					<!--POST INFO -->
+						<div class="card rounded-lg border-0" style="width: 35rem;">
+							<div class="overflow-auto mb-4" style="height: 300px">
+			            		<c:forEach items="${posts.comments}" var="comment">
+			            			<p class="p-3">
+			            			<c:out value="${comment.user.name}"/>
+			            			: <c:out value="${comment.comment}"/>
+			            			</p>
+			            			<hr class="dotted"/>
+			            		</c:forEach>
+			            	</div>
+			            	
+			            	<form action="/postComment/<c:out value='${posts.id}'/>" method="post">
+			            		<div class="form-group">
+			            			<label>Add Comment:</label>
+			            			<textarea name="comment" class="form-control" rows="3"></textarea>
+			            		</div>
+			            		<div class="d-flex justify-content-end">
+			            			<input type="submit" class=" btn my-2 my-sm-0 btn btn-outline-light allBtns" value="Submit"/>
+			            		</div>
+			            	</form>
+						</div>
+					</div>
+					<!--POST INFO-->
+				</div>
+			</div>
 		</div>
-		<!-- DASHBOARD BODY END -->
-		
+	
 	</div>
 </body>
 </html>

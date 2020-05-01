@@ -29,8 +29,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Post {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long id;
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private Long id;
 	private String filePath;
 	private String description;
 	

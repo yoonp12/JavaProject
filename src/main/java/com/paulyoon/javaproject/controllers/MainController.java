@@ -73,11 +73,15 @@ public class MainController {
 	
 	
 	//  FIND ALL POSTS
-	@GetMapping("/allPosts")
-	public String allPosts(Model model) {
+	@GetMapping("/dashboard")
+	public String allPosts(Model model, HttpSession session) {
+		Long id = (Long) session.getAttribute("userId");
+		User userObj = userServ.findUserById(id);
 		List<Post> allPosts = mainServ.findAllPosts();
+		ArrayList<User>friends = userObj.getFriends();
 		model.addAttribute("posts", allPosts);
-		return "home.jsp";
+		model.addAttribute("friends", friends);
+		return "dashboard.jsp";
 	}
 	//  FIND POST BY TAGS
 	@PostMapping(value="/postsByTags")
@@ -103,8 +107,8 @@ public class MainController {
 	
 	//  FIND SINGLE POST
 	@GetMapping("/post/{id}")
-	public String showPost(Long id, Model model) {
-		Post post =mainServ.findPost(id);
+	public String showPost(@PathVariable("id") Long id, Model model) {
+		Post post = mainServ.findPost(id);
 		List<Comment> postComments = post.getComments();
 		List<Tag> postTags = post.getTags();
 		model.addAttribute("posts", post);
@@ -115,7 +119,7 @@ public class MainController {
 	
 	
 	//  LIKE A POST
-	@PostMapping(value="/likePost{id}")
+	@PostMapping(value="/likePost/{id}")
 	public String likePost(Long id, HttpSession session) {
 		Post post = mainServ.findPost(id);
 		Long userId = (Long) session.getAttribute("userId");
@@ -137,6 +141,6 @@ public class MainController {
 		newComment.setUser(user);
 		newComment.setComment(comment);
 		mainServ.newComment(newComment);
-		return "redirect:/showPost/{id}";
+		return "redirect:/post/{id}";
 	}
 }
