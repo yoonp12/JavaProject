@@ -25,10 +25,10 @@
 			<div class="" id="navbarSupportedContent">
 				<ul class="navbar-nav mr-auto">
 					<li class="nav-item active">
-						<a class="nav-link navFont m-2" href="#">Profile <span class="sr-only">(current)</span></a>
+						<a class="nav-link navFont m-2" href="/profile">Profile <span class="sr-only">(current)</span></a>
 					</li>
 					<li class="nav-item active">
-						<a class="nav-link navFont m-2" href="#">Post <span class="sr-only">(current)</span></a>
+						<a class="nav-link navFont m-2" href="/new">Post <span class="sr-only">(current)</span></a>
 					</li>
 					<li class="nav-item active">
 						<a class="nav-link navFont m-2" href="/logout">Logout <span class="sr-only">(current)</span></a>
@@ -53,7 +53,7 @@
 		<div class="row d-flex justify-content-around">
 		<!-- FRIEND'S LIST -->		
 			<div class="w-25">
-				<div class="card border-0" id="dashBody1">
+				<div class="card border-0" id="dashBody">
 					<div class="card-body border-right">
 						<h5 class="card-title " id="friendsList">My Clique</h5>
 						<ul class="list-group list-group-flush">
@@ -68,7 +68,7 @@
 		
 		<!-- ALL POSTS -->
 			<div class="w-75">
-				<div class="card border-0" id="dashBody2">
+				<div class="card border-0" id="dashBody">
 					<div class="card-body d-flex flex-wrap ">
 						<div class="card m-3" id="posts">
 							<img src="" alt="" />

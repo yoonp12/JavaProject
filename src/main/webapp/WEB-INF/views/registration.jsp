@@ -88,7 +88,7 @@
 				<form:errors path="passwordConfirmation" style="color:red" />
 				</p>
 				</div>
-				<button type="submit" class="btn btn-primary">Register</button>
+				<button type="submit" class="btn my-2 my-sm-0 btn btn-outline-light allBtns">Register</button>
 			</form:form>
 			<br>
 			<p>Have an account? <a href="/login">Login here</a></p>

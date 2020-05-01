@@ -65,7 +65,7 @@
 				<input type="password" name="password" class="form-control" />
 				</p>
 			</div>
-			<button type="submit" class="btn btn-primary">Login</button>
+			<button type="submit" class="btn my-2 my-sm-0 btn btn-outline-light allBtns">Login</button>
 			</form>
 			<br>
 			<div style="color:red">

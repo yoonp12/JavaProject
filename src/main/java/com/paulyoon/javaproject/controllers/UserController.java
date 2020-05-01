@@ -1,5 +1,7 @@
 package com.paulyoon.javaproject.controllers;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.paulyoon.javaproject.models.Post;
 import com.paulyoon.javaproject.models.User;
 import com.paulyoon.javaproject.services.UserService;
 import com.paulyoon.javaproject.validator.UserValidator;
@@ -74,7 +77,9 @@ public class UserController {
 	public String Profile(HttpSession session, Model model) {
 		Long userId = (Long) session.getAttribute("userId");
 		User user = userServ.findUserById(userId);
+		List<Post> userPosts = user.getPosts();
 		model.addAttribute("user", user);
+		model.addAttribute("posts", userPosts);
 		return "profile.jsp";
 	}
 	

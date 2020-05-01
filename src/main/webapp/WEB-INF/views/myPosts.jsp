@@ -9,7 +9,6 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Insert title here</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
@@ -23,12 +22,12 @@
 	
 	<script src="https://unpkg.com/swiper/js/swiper.js"></script>
 	<script src="https://unpkg.com/swiper/js/swiper.min.js"></script>
-	
 </head>
 <body>
 	<div class="container">
-		<!-- NAVBAR -->
-		<nav class="navbar navbar-expand-lg mynav w-100 d-flex justify-content-between ">
+	
+	<!-- NAVBAR -->
+		<nav class="navbar navbar-expand-lg mynav w-100 d-flex justify-content-between">
 			<div class="" id="navbarSupportedContent">
 				<ul class="navbar-nav mr-auto">
 					<li class="nav-item active">
@@ -55,43 +54,60 @@
 		</nav>
 		<!-- NAVBAR END -->
 		
-		<!-- PROFILE HEADER -->
-		<div class="row d-flex justify-content-around">
+		
+		<!-- DASHBOARD BODY -->
+		<div class="">
+		<img src="file:///Untitled/private/var/folders/gt/22k5_8k16p5gp9ssmym49rsr0000gn/T/tomcat.7685507392122744966.8081/tmpFiles/1" alt="test Image"/>
 		<!-- FRIEND'S LIST -->		
-			<div class="w-25">
+			<!-- <div class="w-25">
 				<div class="card border-0" id="dashBody1">
 					<div class="card-body border-right">
-						<h5 class="card-title " id="friendsList">User</h5>
-						<img src="..." alt="..." class="rounded-circle">
-						<div class="list-group list-group-flush">
-						
-							<div>Name:<c:out value="${user.name }" /></div>
-							<hr />
-							<div>Email:<c:out value="${user.email }" /></div>
-							<hr />
-							<div>Bio:<c:out value="${user.bio }" /></div>
-						
-						</div>
+						<h5 class="card-title " id="friendsList">My Clique</h5>
+						<ul class="list-group list-group-flush">
+							<li class="list-group-item">Friend #1</li>
+							<li class="list-group-item">Friend #2</li>
+							<li class="list-group-item">Friend #3</li>
+						</ul>
 					</div>
 				</div>
-			</div>
+			</div> -->
 		<!-- FRIEND'S LIST END -->
 		
-		<!-- ALL POSTS -->
-			<div class="w-75">
-				<h3 id="userPostFont" class="text-center">Poster Board</h3>	
-				<div class="card border-0" id="dashBody2">
-					<div class="card-body d-flex justify-content-center ">
+			<div class="d-flex justify-content-center mb-5">
+				<div class="card w-50 border-0">
+					<h1 id="userPostFont" class="mb-3">Create Post:</h1>
 					
-					<!-- USER'S POSTS CAROUSEL -->
-							
-					<div class="swiper-container">
-						<div class="swiper-wrapper mb-5">
+					<form method="post" action="/newPost" enctype="multipart/form-data" >
+						<div class="form-group">
+							<label for="file">Image/File:</label>
+							<input type="file" name="file">
+						</div>
+						<div class="form-group">
+							<label for="description">Caption:</label>
+							<textarea class="form-control" rows="3" name="description"></textarea>
+						</div>      
 						
+						<div class="form-group">
+							<label for="tags">HashTags:</label>
+							<input type="text" name="tags" placeholder="Seperate by commas">
+						</div>    
+	                    <div class="text-right">
+	                    	<button type="submit" class="btn my-2 my-sm-0 btn btn-outline-light allBtns" >Post!</button>
+	                    </div>
+                    </form>
+					
+				</div>
+			</div>
+			
+			<div class="card border-0">
+				<h4 id="userPostFont" class="text-center">Poster Board</h4>	
+				<div class="card-body d-flex justify-content-center ">		
+					<div class="swiper-container">
+					
 						<c:forEach var="post" items="${posts}">
-							<div class="swiper-slide post-slide">
+							<div class="swiper-wrapper text-center">
 								<div class="card rounded-lg">
-									<img src="${post.filePath}" width="400" height="400" class="mb-4 ">
+									<img src="${post.filePath}" width="400" height="400" class="mb-4">
 									<h5><c:out value="${post.description }" /></h5>
 								<div class="flex-wrap">
 									<c:forEach var="post" items="${posts}">
@@ -101,42 +117,48 @@
 								</div>
 							</div>
 						</c:forEach>
-							
-						</div>
 					<!-- Add Pagination -->
-						<div class="swiper-pagination "></div>
-					</div>
-					
-					<!-- USER'S POSTS CAROUSEL END -->
+						<div class="swiper-pagination"></div>
 					</div>
 				</div>
-		<!-- ALL POSTS END -->
-		
+			
 			</div>
-		<!-- DASHBOARD BODY END -->
+		  <!-- Initialize Swiper -->
+			<script>
+
+			
+		    var swiper = new Swiper('.swiper-container', {
+		      slidesPerView: 1,
+		      spaceBetween: 10,
+		      // init: false,
+		      pagination: {
+		        el: '.swiper-pagination',
+		        clickable: true,
+		      },
+		      breakpoints: {
+		        '@0.00': {
+		          slidesPerView: 1,
+		          spaceBetween: 10,
+		        },
+		        '@0.75': {
+		          slidesPerView: 2,
+		          spaceBetween: 20,
+		        },
+		        '@1.00': {
+		          slidesPerView: 3,
+		          spaceBetween: 40,
+		        },
+		        '@1.50': {
+		          slidesPerView: 4,
+		          spaceBetween: 50,
+		        },
+		      }
+		    });
+			</script>
 		
 		</div>
-		<!-- PROFILE HEADER END -->
+		<!-- DASHBOARD BODY END -->
 		
 	</div>
-	
-	<script>
-    var swiper = new Swiper('.swiper-container', {
-      effect: 'coverflow',
-      grabCursor: true,
-      centeredSlides: true,
-      slidesPerView: 'auto',
-      coverflowEffect: {
-        rotate: 50,
-        stretch: 0,
-        depth: 100,
-        modifier: 1,
-        slideShadows : true,
-      },
-      pagination: {
-        el: '.swiper-pagination',
-      },
-    });
-	</script>
 </body>
 </html>

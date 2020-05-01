@@ -11,10 +11,12 @@
 	color: #6782B4;
 	text-shadow: 0px 4px 5px rgba(150, 152, 150, 1);
 }
-#dashBody1{
-	height: 100%;
+.allBtns{
+	box-shadow: 0px 0px 20px 0px rgba(103,130,180,1);
+	background-color:#6782B4;
+	border: solid 1px white;
 }
-#dashBody2{
+#dashBody{
 	height: 100%;
 }
 #posts{
@@ -28,6 +30,7 @@
 	font-size: 48px;
 	text-shadow: 4px 4px 4px #aaa;
 	font-weight: 400;
+	text-shadow: 0px 6px 6px rgba(94, 115, 175, 1);
 }
 #friendsList{
 	font-family: 'Pacifico', serif;
@@ -59,7 +62,7 @@
 	background-position: center;
 	background-size: cover;
 	width: 300px;
-	height: 300px;
+	height: 400px;
 	
 	/* Center slide text vertically */
     display: -webkit-box;
