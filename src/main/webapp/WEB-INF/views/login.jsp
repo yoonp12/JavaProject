@@ -51,7 +51,7 @@
 	<!-- NAVBAR END-->
 	
 	<!-- LOGIN -->
-	<div class="card" style="width: 30rem; margin: auto">
+	<div class="card; shadow p-3 mb-5" style="width: 30rem; margin: auto">
 		<div class="card-body" style="margin: auto; font-family: Verdana;">
 			<h1>Login</h1>
 			<form action="/login" method="post">

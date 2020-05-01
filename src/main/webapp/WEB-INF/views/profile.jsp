@@ -67,12 +67,13 @@
 						<h5 class="card-title " id="friendsList">User</h5>
 						<img src="..." alt="..." class="rounded-circle">
 						<div class="list-group list-group-flush">
-							<div>Name:</div>
+						
+							<div>Name:<c:out value="${user.name }" /></div>
 							<hr />
-							<div>Email:</div>
+							<div>Email:<c:out value="${user.email }" /></div>
 							<hr />
-							<div>Bio:</div>
-							
+							<div>Bio:<c:out value="${user.bio }" /></div>
+						
 						</div>
 					</div>
 				</div>

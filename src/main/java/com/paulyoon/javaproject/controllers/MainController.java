@@ -37,6 +37,7 @@ public class MainController {
 	
 	//  CREATE POST PAGE
 	@GetMapping("/new")
+
 	public String newPost(HttpSession session, Model model) {
 		Long userId = (Long) session.getAttribute("userId");
 		User user = userServ.findUserById(userId);

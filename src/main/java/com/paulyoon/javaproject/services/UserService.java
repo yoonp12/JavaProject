@@ -2,6 +2,8 @@ package com.paulyoon.javaproject.services;
 
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
@@ -44,6 +46,10 @@ public class UserService {
     	    return null;
     	}
     }
+	
+	public void updateUser(@Valid User user) {
+		userRepo.save(user);
+	}
 	
 	//AUTHENTICATE USER
 	public boolean authenticateUser(String email, String password) {
