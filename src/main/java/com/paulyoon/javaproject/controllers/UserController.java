@@ -82,6 +82,11 @@ public class UserController {
 		return "profile.jsp";
 	}
 	
+	@GetMapping("/profile/edit")
+	public String EditProfile() {
+		return "update.jsp";
+	}
+	
 	
 	//  LOGOUT 
 	@GetMapping("/logout")
