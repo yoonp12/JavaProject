@@ -55,6 +55,7 @@
 			<h1>Update Profile</h1>
 			<form action="/profile/edit" method="post">
 			<div class="form-group">
+			<h1>Hello</h1>
 				<p>
 				Upload Profile Picture:
 				<br>
