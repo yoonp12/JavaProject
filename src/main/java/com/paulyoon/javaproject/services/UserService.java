@@ -30,22 +30,26 @@ public class UserService {
 	public User findByEmail(String email) {
         return userRepo.findByEmail(email);
     }
-	
-	//FIND USER BY USERNAME
-	public User findByUserName(String userName) {
-		return userRepo.findByUserName(userName);
-	}
 		
 	//FIND USER BY ID
 	public User findUserById(Long id) {
     	Optional<User> u = userRepo.findById(id);
-    	
     	if(u.isPresent()) {
             return u.get();
     	} else {
     	    return null;
     	}
     }
+	
+	//FIND USER BY USERNAME
+	public User findUserByUsername(String userName) {
+		Optional<User> u = userRepo.findByUserNameContaining(userName);
+		if(u.isPresent()) {
+            return u.get();
+    	} else {
+    	    return null;
+    	}
+	}
 	
 	public void updateUser(@Valid User user) {
 		userRepo.save(user);

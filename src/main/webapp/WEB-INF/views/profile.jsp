@@ -21,7 +21,9 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Varela+Round" />
 	<link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.css">
 	<link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css">
-	
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Patrick+Hand" />
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://unpkg.com/swiper/js/swiper.js"></script>
 	<script src="https://unpkg.com/swiper/js/swiper.min.js"></script>
 	
@@ -53,8 +55,8 @@
 				<h3 id="projectTitle">PicShare</h3>
 			</div>
 			<div>
-				<form action="" method="post" class="form-inline my-2 my-lg-0">
-					<input class="form-control mr-sm-2"  type="search" placeholder="Search Tags" aria-label="Search">
+				<form action="/searchTags" method="post" class="form-inline my-2 my-lg-0">
+					<input class="form-control mr-sm-2"  type="search" name="tags" placeholder="Search Tags" aria-label="Search">
 					<button class="btn my-2 my-sm-0 btn btn-outline-light" style="background-color:#6782B4;" type="submit">Search</button>
 				</form>
 			</div>
@@ -70,7 +72,9 @@
 					<div class="card-body border-right">
 						<div class="text-center mb-5">
 							<h5 class="card-title text-center mb-4" id="friendsList"><c:out value="${user.name }" /></h5>
-							<img src="${user.filePath}" alt="..." class="img-thumbnail" style="width:100%; height:100%;">
+
+							<img src="${user.filePath}" alt="..." id="profilePic" class="img-thumbnail" style="width:100%; height:100%;">
+
 						</div>
 						<div class="list-group list-group-flush">
 							<hr />
@@ -88,7 +92,12 @@
 								<h6>Bio:</h6>
 								<h5><c:out value="${user.bio }" /></h5>
 							</div>
-						
+
+							<div class="text-center mt-4">
+								<form action="/update">
+									<button type="submit" class="btn my-2 my-sm-0 btn btn-outline-light allBtns">Update Profile</button>
+								</form>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -126,8 +135,38 @@
 												<input type="hidden" name="_method" value="delete">
 											</div>
 										</form:form>
-		
+							
+								<div class="card rounded-lg" id="posts">
+									<img src="${post.filePath}" width="360" height="420" class="mb-4 postPic">
+									<c:choose>
+				            		<c:when test="${  post.usersliked.contains( user ) }">
+				            			<form action="/likePost/${post.id}" method="post">
+											<div class="text-left">
+												<button class="border-0"><i class="material-icons" id="like">favorite</i></button>
+												
+											</div>
+										</form>
+									</c:when>
+									<c:otherwise>
+										<form action="/likePost/${post.id}" method="post">
+											<div class="text-left">
+												<button class="border-0"><i class="material-icons" id="like">favorite_border</i></button>
+												
+											</div>
+										</form>
+										
+									</c:otherwise>
+								</c:choose>
+									<div class="d-flex flex-wrap">
+										<c:forEach var="tag" items="${post.tags}">
+											<h6>#<c:out value="${tag.tag}"/></h6>
+										</c:forEach>
+									</div>
+									<h5 class="postDesc text-left"><c:out value="${post.description }" /></h5>
+								
+
 								</div>
+							</div>
 							</div>
 						</c:forEach>
 							
@@ -135,7 +174,7 @@
 						
 					<!-- Add Pagination -->
 						<div class="swiper-pagination pt-5"></div>
-						
+
 					</div>
 					
 					<!-- USER'S POSTS CAROUSEL END -->
@@ -152,6 +191,9 @@
 	</div>
 	
 	<script>
+
+	
+	
     var swiper = new Swiper('.swiper-container', {
       effect: 'coverflow',
       grabCursor: true,

@@ -60,7 +60,7 @@ public class MainService {
 	}
 	
 	public Tag findTagByString(String tag) {
-		Optional<Tag> optionalTag = tagRepo.findByTag(tag);
+		Optional<Tag> optionalTag = tagRepo.findByTagContaining(tag);
 		if(optionalTag.isPresent()) {
 			return optionalTag.get();
 		}else {

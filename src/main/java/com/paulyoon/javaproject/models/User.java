@@ -45,7 +45,22 @@ public class User {
     @Transient 
     private boolean duplicate;
     
-    private ArrayList<User> friends;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+    name = "friendships", 
+    joinColumns = @JoinColumn(name = "user_id"), 
+    inverseJoinColumns = @JoinColumn(name = "friend_id")
+    )
+    private List<User> friends;
+    
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+    name = "friendships", 
+    joinColumns = @JoinColumn(name = "friend_id"), 
+    inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private List<User> userFriends;
     
     //MANY TO MANY ( MANY USERS LIKE MANY POSTS )
     @ManyToMany(fetch = FetchType.LAZY)
@@ -71,13 +86,15 @@ public class User {
     public User() {
     }
     
-    public User(String name, String userName, String filePath, String email, String password, String bio, ArrayList<User>friends) {
+
+    public User(String name, String userName, String filePath, String email, String password, String bio, List<User>friends, List<User>userFriends) {
     	setName(name);
     	setUserName(userName);
     	setEmail(email);
     	setPassword(password);
     	setBio(bio);
     	setFriends(friends);
+    	setUserFriends(userFriends);
     	setFilePath(filePath);
     }
     
@@ -194,13 +211,6 @@ public class User {
 		this.bio = bio;
 	}
 
-	public ArrayList<User> getFriends() {
-		return friends;
-	}
-
-	public void setFriends(ArrayList<User> friends) {
-		this.friends = friends;
-	}
 
 	public String getFilePath() {
 		return filePath;
@@ -208,6 +218,22 @@ public class User {
 
 	public void setFilePath(String filePath) {
 		this.filePath = filePath;
+	}
+
+	public List<User> getFriends() {
+		return friends;
+	}
+
+	public void setFriends(List<User> friends) {
+		this.friends = friends;
+	}
+
+	public List<User> getUserFriends() {
+		return userFriends;
+	}
+
+	public void setUserFriends(List<User> userFriends) {
+		this.userFriends = userFriends;
 	}
 	
 	

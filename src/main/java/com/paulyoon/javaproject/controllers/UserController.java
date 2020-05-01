@@ -15,6 +15,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.paulyoon.javaproject.models.Post;
 import com.paulyoon.javaproject.models.User;
@@ -57,7 +61,7 @@ public class UserController {
 			session.setAttribute("users", userObj);
 			Long userId = user.getId();
 			session.setAttribute("userId", userId);
-			return "redirect:/new";
+			return "redirect:/dashboard";
 		}
 	}
 	
@@ -69,7 +73,7 @@ public class UserController {
 		if(userObj == true) {
 			User userInfo = userServ.findByEmail(email);
 			session.setAttribute("userId", userInfo.getId());
-			return "redirect:/profile";
+			return "redirect:/dashboard";
 		}else {
 			model.addAttribute("error", "Invalid Username or Password, please try again");
 			return "login.jsp";
@@ -120,15 +124,28 @@ public class UserController {
 
 	//  ADD FRIEND
 	
-	@PostMapping(value="/addFriend/{id}")
-	public String AddFriend(@PathVariable("id") Long id, HttpSession session) {
+
+	@PostMapping(value="/addFriend")
+	public String AddFriend(@RequestParam("username") String username, HttpSession session) {
 		Long userId = (Long)session.getAttribute("userId");
 		User userObj = userServ.findUserById(userId);
-		User friend = userServ.findUserById(id);
-		userObj.getFriends().add(friend);
-		userServ.updateUser(userObj);
-		return "redirect:/dashboard";
+		User friend = userServ.findUserByUsername(username);
+		if(friend == null) {
+			return "redirect:/createError";
+		}else {
+			userObj.getFriends().add(friend);
+			userServ.updateUser(userObj);
+			return "redirect:/dashboard";
+		}
 	}
+	
+	//  FLASH REDIRECT
+	
+	@RequestMapping("/createError")
+    public String flashMessages(RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("error", "Username does not exist, please verify!");
+        return "redirect:/dashboard";
+    }
 	
 	
 	//  LOGOUT 

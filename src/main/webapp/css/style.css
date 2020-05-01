@@ -10,6 +10,9 @@
 .navFont{
 	color: #6782B4;
 	text-shadow: 0px 4px 5px rgba(150, 152, 150, 1);
+	font-family: 'Patrick Hand';
+	font-size: 18px;
+	font-weight: 800;
 }
 .allBtns{
 	box-shadow: 0px 0px 20px 0px rgba(103,130,180,1);
@@ -20,13 +23,15 @@
 	font-family: 'Varela Round', serif;
 	font-weight: 600;
 }
-#dashBody{
-	height: 100%;
+
+#like {
+	font-size: 25px;
+	color:red;
 }
 #posts{
 	border-radius: 5px;
 	padding: 5px;
-	border: 2px solid black;
+	border: 1px solid black;
 	box-shadow: 0px 0px 25px 5px rgba(103,130,180,0.77);
 }
 #projectTitle{
@@ -49,13 +54,20 @@
 	font-weight: 600;
 	padding: 20px 0px 0px 0px;
 }
+#profilePic{
+	border: 3px solid black;
+	box-shadow: 0px 0px 25px 5px rgba(103,130,180,0.77);	
+}
+.postPic{
+	border: 1px solid black;
+}
 .post-slide{
 	display: flex;
   	justify-content: center;
 }
 
 .swiper-container {
-	width: 600px;
+	width: 500px;
 	padding-top: 50px;
 	padding-bottom: 50px;
 }
