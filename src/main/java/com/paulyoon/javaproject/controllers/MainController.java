@@ -9,15 +9,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.paulyoon.javaproject.models.Comment;
 import com.paulyoon.javaproject.models.Post;
 import com.paulyoon.javaproject.models.Tag;
 import com.paulyoon.javaproject.models.User;
+import com.paulyoon.javaproject.services.AmazonClient;
 import com.paulyoon.javaproject.services.MainService;
 import com.paulyoon.javaproject.services.UserService;
 
@@ -30,28 +31,43 @@ public class MainController {
 	@Autowired
 	private UserService userServ;
 	
+	@Autowired
+	private AmazonClient amazonClient;
+
 	
 	//  CREATE POST PAGE
 	@GetMapping("/new")
-	public String newPost() {
-		return "/PostImg/PostPage.jsp";
+	public String newPost(HttpSession session, Model model) {
+		Long userId = (Long) session.getAttribute("userId");
+		User user = userServ.findUserById(userId);
+		List<Post> userPosts = user.getPosts();
+		model.addAttribute("user", user);
+		model.addAttribute("posts", userPosts);
+		return "myPosts.jsp";
 
 	}
 	//  CREATE POST METHOD
 	@PostMapping(value="/newPost")
-	public String createPost(@ModelAttribute("post") Post post, @RequestParam("tags") String tags) {
-		Post newPost = mainServ.newPost(post);
-		String[] splitTags = tags.split(",");
-		for(int i = 0; i < splitTags.length; i++) {
-			Tag x = mainServ.findTagByString(splitTags[i]);
-			if(x == null) {
-				Tag y = mainServ.newTag(new Tag(splitTags[i]));
-				newPost.getTags().add(y);
-			}else {
-				newPost.getTags().add(x);
-			}
-		}
-		return"redirect:/myPosts";
+	public String createPost(@RequestParam("file") MultipartFile file, @RequestParam("description") String description, @RequestParam("tags") String tags, HttpSession session) {
+		Long id = (Long) session.getAttribute("userId");
+		User userObj = userServ.findUserById(id);
+		Post newPost = new Post();
+		String postPath = this.amazonClient.uploadFile(file);
+		newPost.setFilePath(postPath);
+		newPost.setUser(userObj);
+		newPost.setDescription(description);
+//		String[] splitTags = tags.split(",");
+//		for(int i = 0; i < splitTags.length; i++) {
+//			Tag x = mainServ.findTagByString(splitTags[i]);
+//			if(x == null) {
+//				Tag y = mainServ.newTag(new Tag(splitTags[i]));
+//				newPost.getTags().add(y);
+//			}else {
+//				newPost.getTags().add(x);
+//			}
+//		}
+		mainServ.newPost(newPost);
+		return"redirect:/profile";
 	}
 	
 	

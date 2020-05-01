@@ -1,5 +1,7 @@
 package com.paulyoon.javaproject.controllers;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.paulyoon.javaproject.models.Post;
 import com.paulyoon.javaproject.models.User;
 import com.paulyoon.javaproject.services.UserService;
 import com.paulyoon.javaproject.validator.UserValidator;
@@ -60,7 +63,7 @@ public class UserController {
 		if(userObj == true) {
 			User userInfo = userServ.findByEmail(email);
 			session.setAttribute("userId", userInfo.getId());
-			return "redirect:/courses";
+			return "redirect:/new";
 		}else {
 			model.addAttribute("error", "Invalid Username or Password, please try again");
 			return "/login.jsp";
@@ -73,8 +76,10 @@ public class UserController {
 	public String Profile(HttpSession session, Model model) {
 		Long userId = (Long) session.getAttribute("userId");
 		User user = userServ.findUserById(userId);
+		List<Post> userPosts = user.getPosts();
 		model.addAttribute("user", user);
-		return "user.jsp";
+		model.addAttribute("posts", userPosts);
+		return "profile.jsp";
 	}
 	
 	
