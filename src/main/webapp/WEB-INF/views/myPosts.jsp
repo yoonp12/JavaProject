@@ -99,7 +99,7 @@
 				</div>
 			</div>
 			
-			<div class="card border-0">
+			<%-- <div class="card border-0">
 				<h4 id="userPostFont" class="text-center">Poster Board</h4>	
 				<div class="card-body d-flex justify-content-center ">		
 					<div class="swiper-container">
@@ -122,7 +122,7 @@
 					</div>
 				</div>
 			
-			</div>
+			</div> --%>
 		  <!-- Initialize Swiper -->
 			<script>
 
