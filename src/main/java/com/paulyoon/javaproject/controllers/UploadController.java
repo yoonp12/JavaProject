@@ -43,23 +43,24 @@ public class UploadController {
 	 * Upload single file using Spring Controller
 	 */
 	@RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
-	public String uploadFileHandler(@ModelAttribute("post") Post post,
-			@RequestParam("name") String name,
-			@RequestParam("file") MultipartFile file, HttpSession session, Model model,
+	public String uploadFileHandler(@RequestParam("description") String description,
+			@RequestParam("filePath") MultipartFile file, HttpSession session, Model model,
 			@RequestParam("tags") String tags) {
 		String[] splitTags = tags.split(",");
 		Long userId = (Long) session.getAttribute("userId");
 		User user = userServ.findUserById(userId);
-		Post newPost = mainServ.newPost(post);
-		for(int i = 0; i < splitTags.length; i++) {
-			Tag x = mainServ.findTagByString(splitTags[i]);
-			if(x == null) {
-				Tag y = mainServ.newTag(new Tag(splitTags[i]));
-				newPost.getTags().add(y);
-			}else {
-				newPost.getTags().add(x);
-			}
-		}
+		Post newPost = new Post();
+		newPost.setDescription(description);
+		newPost.setUser(user);
+//		for(int i = 0; i < splitTags.length; i++) {
+//			Tag x = mainServ.findTagByString(splitTags[i]);
+//			if(x == null) {
+//				Tag y = mainServ.newTag(new Tag(splitTags[i]));
+//				newPost.getTags().add(y);
+//			}else {
+//				newPost.getTags().add(x);
+//			}
+//		}
 		if (!file.isEmpty()) {
 			try {
 				byte[] bytes = file.getBytes();
@@ -72,7 +73,7 @@ public class UploadController {
 
 				// Create the file on server
 				File serverFile = new File(dir.getAbsolutePath()
-						+ File.separator + name);
+						+ File.separator + description);
 				BufferedOutputStream stream = new BufferedOutputStream(
 						new FileOutputStream(serverFile));
 				stream.write(bytes);
@@ -82,14 +83,14 @@ public class UploadController {
 						+ serverFile.getAbsolutePath());
 				String postPath = serverFile.getAbsolutePath();
 				newPost.setFilePath(postPath);
-
-				return "You successfully uploaded file=" + name;
+				user.getPosts().add(newPost);
+				mainServ.updatePost(newPost);
+				return "redirect:/profile";
 			} catch (Exception e) {
-				return "You failed to upload " + name + " => " + e.getMessage();
+				return "You failed to upload "  + e.getMessage();
 			}
 		} else {
-			return "You failed to upload " + name
-					+ " because the file was empty.";
+			return "You failed to upload because the file was empty.";
 		}
 		
 	}
