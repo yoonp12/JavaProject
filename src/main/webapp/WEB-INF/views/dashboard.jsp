@@ -31,6 +31,9 @@
 						<a class="nav-link navFont m-2" href="/new">Post <span class="sr-only">(current)</span></a>
 					</li>
 					<li class="nav-item active">
+						<a class="nav-link navFont m-2" href="/dashboard">Dashboard <span class="sr-only">(current)</span></a>
+					</li>
+					<li class="nav-item active">
 						<a class="nav-link navFont m-2" href="/logout">Logout <span class="sr-only">(current)</span></a>
 					</li>
 				</ul>
@@ -70,50 +73,13 @@
 			<div class="w-75">
 				<div class="card border-0" id="dashBody">
 					<div class="card-body d-flex flex-wrap ">
-						<div class="card m-3" id="posts">
-							<img src="" alt="" />
-							<h1>hello</h1>
-						</div>
-						<div class="card m-3" id="posts">
-							<img src="" alt="" />
-							<h1>hello</h1>
-						</div>
-						<div class="card m-3" id="posts">
-							<img src="" alt="" />
-							<h1>hello</h1>
-						</div>
-						<div class="card m-3" id="posts">
-							<img src="" alt="" />
-							<h1>hello</h1>
-						</div>
-						<div class="card m-3" id="posts">
-							<img src="" alt="" />
-							<h1>hello</h1>
-						</div>
-						<div class="card m-3" id="posts">
-							<img src="" alt="" />
-							<h1>hello</h1>
-						</div>
-						<div class="card m-3" id="posts">
-							<img src="" alt="" />
-							<h1>hello</h1>
-						</div>
-						<div class="card m-3" id="posts">
-							<img src="" alt="" />
-							<h1>hello</h1>
-						</div>
-						<div class="card m-3" id="posts">
-							<img src="" alt="" />
-							<h1>hello</h1>
-						</div>
-						<div class="card m-3" id="posts">
-							<img src="" alt="" />
-							<h1>hello</h1>
-						</div>
-						<div class="card m-3" id="posts">
-							<img src="" alt="" />
-							<h1>hello</h1>
-						</div>
+					
+						<c:forEach var="post" items="${posts}">
+							<div class="card m-3" id="posts">
+								<a href="/post/${post.id}"><img src="${post.filePath}" alt="" width="200" height="250"/></a>
+								<h5><c:out value="${post.description }" /></h5>
+							</div>
+						</c:forEach>
 
 					</div>
 				</div>

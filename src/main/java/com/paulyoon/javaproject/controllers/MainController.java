@@ -72,11 +72,11 @@ public class MainController {
 	
 	
 	//  FIND ALL POSTS
-	@GetMapping("/allPosts")
+	@GetMapping("/dashboard")
 	public String allPosts(Model model) {
 		List<Post> allPosts = mainServ.findAllPosts();
 		model.addAttribute("posts", allPosts);
-		return "home.jsp";
+		return "dashboard.jsp";
 	}
 	//  FIND POST BY TAGS
 	@PostMapping(value="/postsByTags")
@@ -102,8 +102,8 @@ public class MainController {
 	
 	//  FIND SINGLE POST
 	@GetMapping("/post/{id}")
-	public String showPost(Long id, Model model) {
-		Post post =mainServ.findPost(id);
+	public String showPost(@PathVariable("id") Long id, Model model) {
+		Post post = mainServ.findPost(id);
 		List<Comment> postComments = post.getComments();
 		List<Tag> postTags = post.getTags();
 		model.addAttribute("posts", post);
@@ -114,7 +114,7 @@ public class MainController {
 	
 	
 	//  LIKE A POST
-	@PostMapping(value="/likePost{id}")
+	@PostMapping(value="/likePost/{id}")
 	public String likePost(Long id, HttpSession session) {
 		Post post = mainServ.findPost(id);
 		Long userId = (Long) session.getAttribute("userId");

@@ -38,6 +38,9 @@
 						<a class="nav-link navFont m-2" href="/new">Post <span class="sr-only">(current)</span></a>
 					</li>
 					<li class="nav-item active">
+						<a class="nav-link navFont m-2" href="/dashboard">Dashboard <span class="sr-only">(current)</span></a>
+					</li>
+					<li class="nav-item active">
 						<a class="nav-link navFont m-2" href="/logout">Logout <span class="sr-only">(current)</span></a>
 					</li>
 				</ul>
