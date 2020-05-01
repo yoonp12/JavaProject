@@ -83,6 +83,7 @@ public class UserController {
 		return "profile.jsp";
 	}
 	
+
 	// UPDATE USER PROFILE 
 	
 	@GetMapping("/update")
@@ -98,6 +99,7 @@ public class UserController {
 		return "redirect:/profile";
 	}
 	
+
 	
 	
 	//  LOGOUT 
