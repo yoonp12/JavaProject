@@ -14,6 +14,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah" />
 <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.css">
 <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Patrick+Hand" />
 <title>Register</title>
 </head>
 <body>
@@ -29,7 +30,7 @@
 					<a class="nav-link navFont m-2" href="#">Post <span class="sr-only">(current)</span></a>
 				</li>
 				<li class="nav-item active">
-					<a class="nav-link navFont m-2" href="#">Logout <span class="sr-only">(current)</span></a>
+					<a class="nav-link navFont m-2" href="/login">Login <span class="sr-only">(current)</span></a>
 				</li>
 			</ul>
 		</div>

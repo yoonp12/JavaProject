@@ -12,6 +12,6 @@ import com.paulyoon.javaproject.models.Tag;
 public interface TagRepository extends CrudRepository<Tag,Long>{
 	
 	List<Tag> findAll();
-	Optional<Tag>findByTag(String tag);
+	Optional<Tag>findByTagContaining(String tag);
 
 }

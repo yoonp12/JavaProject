@@ -20,7 +20,9 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah" />
 	<link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.css">
 	<link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css">
-	
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Patrick+Hand" />
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://unpkg.com/swiper/js/swiper.js"></script>
 	<script src="https://unpkg.com/swiper/js/swiper.min.js"></script>
 	
@@ -49,8 +51,8 @@
 				<h3 id="projectTitle">PiClique</h3>
 			</div>
 			<div>
-				<form action="" method="post" class="form-inline my-2 my-lg-0">
-					<input class="form-control mr-sm-2"  type="search" placeholder="Search Tags" aria-label="Search">
+				<form action="/searchTags" method="post" class="form-inline my-2 my-lg-0">
+					<input class="form-control mr-sm-2"  type="search" name="tags" placeholder="Search Tags" aria-label="Search">
 					<button class="btn my-2 my-sm-0 btn btn-outline-light" style="background-color:#6782B4;" type="submit">Search</button>
 				</form>
 			</div>
@@ -104,14 +106,34 @@
 						
 						<c:forEach var="post" items="${posts}">
 							<div class="swiper-slide post-slide">
-								<div class="card rounded-lg">
-									<img src="${post.filePath}" width="400" height="400" class="mb-4 ">
-									<h5 class="postDesc"><c:out value="${post.description }" /></h5>
-								<div class="flex-wrap">
-									<c:forEach var="post" items="${posts}">
-										<p>#<c:out value="${post.tags}" />, </p>
-									</c:forEach>
-								</div>
+								<div class="card rounded-lg" id="posts">
+									<img src="${post.filePath}" width="360" height="420" class="mb-4 postPic">
+									<c:choose>
+				            		<c:when test="${  post.usersliked.contains( user ) }">
+				            			<form action="/likePost/${post.id}" method="post">
+											<div class="text-left">
+												<button class="border-0"><i class="material-icons" id="like">favorite</i></button>
+												
+											</div>
+										</form>
+									</c:when>
+									<c:otherwise>
+										<form action="/likePost/${post.id}" method="post">
+											<div class="text-left">
+												<button class="border-0"><i class="material-icons" id="like">favorite_border</i></button>
+												
+											</div>
+										</form>
+										
+									</c:otherwise>
+								</c:choose>
+									<div class="d-flex flex-wrap pl-1">
+										<c:forEach var="tag" items="${post.tags}">
+											<h6>#<c:out value="${tag.tag}"/></h6>
+										</c:forEach>
+									</div>
+									<h5 class="postDesc text-left pl-1"><c:out value="${post.description }" /></h5>
+								
 								</div>
 							</div>
 						</c:forEach>

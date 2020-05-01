@@ -17,7 +17,9 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine" />
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Pacifico" />
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah" />
-	
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Patrick+Hand" />
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Patrick+Hand" />
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
 	<div class="container">
@@ -44,8 +46,8 @@
 				<h3 id="projectTitle">PiClique</h3>
 			</div>
 			<div>
-				<form action="" method="post" class="form-inline my-2 my-lg-0">
-					<input class="form-control mr-sm-2"  type="search" placeholder="Search Tags" aria-label="Search">
+				<form action="/searchTags" method="post" class="form-inline my-2 my-lg-0">
+					<input class="form-control mr-sm-2"  type="search" name="tags" placeholder="Search Tags" aria-label="Search">
 					<button class="btn my-2 my-sm-0 btn btn-outline-light" style="background-color:#6782B4;" type="submit">Search</button>
 				</form>
 			</div>
@@ -56,15 +58,39 @@
 		<div class="d-flex justify-content-around mt-5">
 			<div class="w-50">
 				<h3 id="userPostFont" class="text-center">Poster Board</h3>	
-				<div class="card border-0" id="dashBody">
+				<div class="card border-0" >
 					<div class="card-body d-flex justify-content-center ">
 					
 					<!--POST INFO -->
 
 
-						<div class="card rounded-lg">
+						<div class="card rounded-lg" id="posts">
 							<img src="${posts.filePath}" width="400" height="400" class="mb-4 ">
-							<h5 class="text-center"><c:out value="${posts.description }" /></h5>
+							<c:choose>
+			            		<c:when test="${  posts.usersliked.contains( user ) }">
+			            			<form action="/show/likePost/${posts.id}" method="post">
+										<div class="text-left">
+											<button class="border-0"><i class="material-icons" id="like">favorite</i></button>
+											
+										</div>
+									</form>
+								</c:when>
+								<c:otherwise>
+									<form action="/show/likePost/${posts.id}" method="post">
+										<div class="text-left">
+											<button class="border-0"><i class="material-icons" id="like">favorite_border</i></button>
+											
+										</div>
+									</form>
+									
+								</c:otherwise>
+							</c:choose>
+							<div class="d-flex flex-wrap">
+								<c:forEach var="tag" items="${posts.tags}">
+									<h6>#<c:out value="${tag.tag}"/></h6>
+								</c:forEach>
+							</div>
+							<h5 class="postDesc text-left"><c:out value="${posts.description }" /></h5>
 						</div>
 
 					</div>
@@ -72,14 +98,14 @@
 				</div>
 			</div>
 			
-			<div class="w-50 mt-5">
+			<div class="w-50">
 				<h3 id="userPostFont" class="text-center">Comments</h3>	
 				<div class="card border-0" id="dashBody">
 					<div class="card-body d-flex justify-content-center ">
 					
 					<!--POST INFO -->
-						<div class="card rounded-lg border-0" style="width: 35rem;">
-							<div class="overflow-auto mb-4" style="height: 300px">
+						<div class="card rounded-lg border-0" id="posts"style="width: 35rem;">
+							<div class="overflow-auto mb-4" style="height: 320px">
 			            		<c:forEach items="${posts.comments}" var="comment">
 			            			<p class="p-3">
 			            			<c:out value="${comment.user.name}"/>
@@ -91,8 +117,7 @@
 			            	
 			            	<form action="/postComment/<c:out value='${posts.id}'/>" method="post">
 			            		<div class="form-group">
-			            			<label>Add Comment:</label>
-			            			<textarea name="comment" class="form-control" rows="3"></textarea>
+ 									<textarea name="comment" class="form-control" placeholder="Type Comment"rows="3"></textarea>
 			            		</div>
 			            		<div class="d-flex justify-content-end">
 			            			<input type="submit" class=" btn my-2 my-sm-0 btn btn-outline-light allBtns" value="Submit"/>

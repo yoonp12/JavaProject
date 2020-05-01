@@ -19,6 +19,7 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah" />
 	<link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.css">
 	<link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Patrick+Hand" />
 	
 	<script src="https://unpkg.com/swiper/js/swiper.js"></script>
 	<script src="https://unpkg.com/swiper/js/swiper.min.js"></script>
@@ -48,8 +49,8 @@
 				<h3 id="projectTitle">PiClique</h3>
 			</div>
 			<div>
-				<form action="" method="post" class="form-inline my-2 my-lg-0">
-					<input class="form-control mr-sm-2"  type="search" placeholder="Search Tags" aria-label="Search">
+				<form action="/searchTags" method="post" class="form-inline my-2 my-lg-0">
+					<input class="form-control mr-sm-2"  type="search" name="tags" placeholder="Search Tags" aria-label="Search">
 					<button class="btn my-2 my-sm-0 btn btn-outline-light" style="background-color:#6782B4;" type="submit">Search</button>
 				</form>
 			</div>

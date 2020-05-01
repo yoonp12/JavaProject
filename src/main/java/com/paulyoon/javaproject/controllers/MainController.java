@@ -2,6 +2,7 @@ package com.paulyoon.javaproject.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.paulyoon.javaproject.models.Comment;
 import com.paulyoon.javaproject.models.Post;
@@ -47,6 +49,8 @@ public class MainController {
 		return "myPosts.jsp";
 
 	}
+	
+	
 	//  CREATE POST METHOD
 	@PostMapping(value="/newPost")
 	public String createPost(@RequestParam("file") MultipartFile file, @RequestParam("description") String description, @RequestParam("tags") String tags, HttpSession session) {
@@ -57,16 +61,18 @@ public class MainController {
 		newPost.setFilePath(postPath);
 		newPost.setUser(userObj);
 		newPost.setDescription(description);
-//		String[] splitTags = tags.split(",");
-//		for(int i = 0; i < splitTags.length; i++) {
-//			Tag x = mainServ.findTagByString(splitTags[i]);
-//			if(x == null) {
-//				Tag y = mainServ.newTag(new Tag(splitTags[i]));
-//				newPost.getTags().add(y);
-//			}else {
-//				newPost.getTags().add(x);
-//			}
-//		}
+		String[] splitTags = tags.split(",");
+		List <Tag> postTags = new ArrayList<Tag>();
+		newPost.setTags(postTags);
+		for(int i = 0; i < splitTags.length; i++) {
+			Tag x = mainServ.findTagByString(splitTags[i]);
+			if(x != null) {
+				postTags.add(x);
+			}else {
+				Tag y = mainServ.newTag(new Tag(splitTags[i]));
+				postTags.add(y);
+			}
+		}
 		mainServ.newPost(newPost);
 		return"redirect:/profile";
 	}
@@ -78,14 +84,17 @@ public class MainController {
 		Long id = (Long) session.getAttribute("userId");
 		User userObj = userServ.findUserById(id);
 		List<Post> allPosts = mainServ.findAllPosts();
-		ArrayList<User>friends = userObj.getFriends();
+		List<User>friends = userObj.getFriends();
+		model.addAttribute("user", userObj);
 		model.addAttribute("posts", allPosts);
 		model.addAttribute("friends", friends);
 		return "dashboard.jsp";
 	}
+	
+	
 	//  FIND POST BY TAGS
-	@PostMapping(value="/postsByTags")
-	public String findPostsByTags(@RequestParam("tags") String tag, Model model) {
+	@PostMapping(value="/searchTags")
+	public String findPostsByTags(@RequestParam("tags") String tag, Model model, RedirectAttributes redirectAttributes) {
 		List<Post> allPosts = mainServ.findAllPosts();
 		List<Post> foundPosts = new ArrayList<Post>();
 		Tag x = mainServ.findTagByString(tag);
@@ -101,16 +110,32 @@ public class MainController {
 			return null;
 		}
 		model.addAttribute("posts", foundPosts);
+		redirectAttributes.addAttribute("taggedPosts", foundPosts);
 		return "redirect:/taggedPosts";
+	}
+	
+	
+	//  DASHBOARD WITH TAGS SEARCHED
+	@GetMapping("/taggedPosts")
+	public String searchedTags(@RequestParam("taggedPosts") List<Post> taggedPosts, Model model, HttpSession session) {
+		Long id = (Long) session.getAttribute("userId");
+		User userObj = userServ.findUserById(id);
+		List<User>friends = userObj.getFriends();
+		model.addAttribute("friends", friends);
+		model.addAttribute("posts", taggedPosts);
+		return "taggedPosts.jsp";
 	}
 	
 	
 	//  FIND SINGLE POST
 	@GetMapping("/post/{id}")
-	public String showPost(@PathVariable("id") Long id, Model model) {
+	public String showPost(@PathVariable("id") Long id, Model model, HttpSession session) {
+		Long userId = (Long) session.getAttribute("userId");
+		User user = userServ.findUserById(userId);
 		Post post = mainServ.findPost(id);
 		List<Comment> postComments = post.getComments();
 		List<Tag> postTags = post.getTags();
+		model.addAttribute("user", user);
 		model.addAttribute("posts", post);
 		model.addAttribute("comments", postComments);
 		model.addAttribute("tags", postTags);
@@ -120,13 +145,34 @@ public class MainController {
 	
 	//  LIKE A POST
 	@PostMapping(value="/likePost/{id}")
-	public String likePost(Long id, HttpSession session) {
+	public String likePost(@PathVariable("id") Long id, HttpSession session) {
 		Post post = mainServ.findPost(id);
 		Long userId = (Long) session.getAttribute("userId");
 		User user = userServ.findUserById(userId);
-		List<User> usersLiked = post.getUsersliked();
-		usersLiked.add(user);
-		return "redirect:/showPost{id}";
+		List<User>usersLiked = post.getUsersliked();
+		if(usersLiked.contains(user)) {
+			usersLiked.remove(user);
+		}else {
+			usersLiked.add(user);
+		}
+		mainServ.updatePost(post);
+		return "redirect:/dashboard";
+	}
+	
+	//  LIKE A POST ON SHOW POST
+	@PostMapping(value="/show/likePost/{id}")
+	public String showLikePost(@PathVariable("id") Long id, HttpSession session) {
+		Post post = mainServ.findPost(id);
+		Long userId = (Long) session.getAttribute("userId");
+		User user = userServ.findUserById(userId);
+		List<User>usersLiked = post.getUsersliked();
+		if(usersLiked.contains(user)) {
+			usersLiked.remove(user);
+		}else {
+			usersLiked.add(user);
+		}
+		mainServ.updatePost(post);
+		return "redirect:/post/{id}";
 	}
 	
 	

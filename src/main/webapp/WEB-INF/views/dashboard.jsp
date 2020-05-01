@@ -16,6 +16,10 @@
 	<link rel="stylesheet" href="css/style.css" />
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine" />
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Pacifico" />
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Patrick+Hand" />
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  
 </head>
 <body>
 	<div class="container">
@@ -42,8 +46,8 @@
 				<h3 id="projectTitle">PiClique</h3>
 			</div>
 			<div>
-				<form action="" method="post" class="form-inline my-2 my-lg-0">
-					<input class="form-control mr-sm-2"  type="search" placeholder="Search Tags" aria-label="Search">
+				<form action="/searchTags" method="post" class="form-inline my-2 my-lg-0">
+					<input class="form-control mr-sm-2"  type="search" name="tags" placeholder="Search Tags" aria-label="Search">
 					<button class="btn my-2 my-sm-0 btn btn-outline-light" style="background-color:#6782B4;" type="submit">Search</button>
 				</form>
 			</div>
@@ -59,13 +63,21 @@
 				<div class="card border-0" id="dashBody">
 					<div class="card-body border-right">
 						<h5 class="card-title " id="friendsList">My Clique</h5>
-					
-						<ul class="list-group list-group-flush">
-							<c:forEach var="friend" items="${friends}" >
-								<li class="list-group-item" ><a href="/profile/${friend.id}"><c:out value="${friend.name}" /></a></li>
-							</c:forEach>
-						</ul>
-						
+						<div class="overflow-auto mb-4" style="height: 500px">
+							<ul class="list-group list-group-flush">
+								<c:forEach var="friend" items="${friends}" >
+									<li class="list-group-item mt-2 mb-2" ><a href="/profile/${friend.id}"><c:out value="${friend.name}" /></a></li>
+									<hr />
+								</c:forEach>
+							</ul>
+						</div>
+						<form action="/addFriend" method="post">
+							<div class="form-group">
+								<label for="username">Username:</label>
+								<input type="text" name="username" class="form-control mb-3" placeholder="Add Friend"/>
+								<button class="btn my-2 my-sm-0 btn btn-outline-light allBtns">Add</button>
+							</div>
+						</form>
 					</div>
 				</div>
 			</div>
@@ -78,8 +90,32 @@
 					
 						<c:forEach var="post" items="${posts}">
 							<div class="card m-3" id="posts">
-								<a href="/post/${post.id}"><img src="${post.filePath}" alt="" width="200" height="250"/></a>
-								<h5><c:out value="${post.description }" /></h5>
+								<a href="/post/${post.id}"><img src="${post.filePath}" alt="" width="200" height="250" class="postPic mb-2"/></a>
+				            	<c:choose>
+				            		<c:when test="${  post.usersliked.contains( user ) }">
+				            			<form action="/likePost/${post.id}" method="post">
+											<div class="text-left">
+												<button class="border-0"><i class="material-icons" id="like">favorite</i></button>
+												
+											</div>
+										</form>
+									</c:when>
+									<c:otherwise>
+										<form action="/likePost/${post.id}" method="post">
+											<div class="text-left">
+												<button class="border-0"><i class="material-icons" id="like">favorite_border</i></button>
+												
+											</div>
+										</form>
+										
+									</c:otherwise>
+								</c:choose>
+								<div class="d-flex flex-wrap">
+									<c:forEach var="tag" items="${post.tags}">
+										<h6>#<c:out value="${tag.tag}"/></h6>
+									</c:forEach>
+								</div>
+								<h5 class="postDesc text-left"><c:out value="${post.description }" /></h5>
 							</div>
 						</c:forEach>
 
@@ -92,5 +128,11 @@
 		<!-- DASHBOARD BODY END -->
 		
 	</div>
+	
+	<script>
+		$(".heart.fa").click(function() {
+		  $(this).toggleClass("fa-heart fa-heart-o");
+		});
+	</script>
 </body>
 </html>
