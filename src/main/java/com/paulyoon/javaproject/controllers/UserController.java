@@ -11,12 +11,14 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.paulyoon.javaproject.models.Post;
 import com.paulyoon.javaproject.models.User;
+import com.paulyoon.javaproject.services.AmazonClient;
 import com.paulyoon.javaproject.services.UserService;
 import com.paulyoon.javaproject.validator.UserValidator;
 
@@ -29,6 +31,9 @@ public class UserController {
 	
 	@Autowired
 	private UserValidator userVal;
+	
+	@Autowired
+	private AmazonClient amazonClient;
 	
 	
 	@GetMapping("/login")
@@ -83,6 +88,17 @@ public class UserController {
 		return "profile.jsp";
 	}
 	
+	
+	//  FRIEND'S PROFILE
+	@GetMapping("/profile/{id}")
+	public String Profile(@PathVariable("id") Long id, HttpSession session, Model model) {
+		User friend = userServ.findUserById(id);
+		List<Post> friendPosts = friend.getPosts();
+		model.addAttribute("user", friend);
+		model.addAttribute("posts", friendPosts);
+		return "friendProfile.jsp";
+	}
+	
 
 	// UPDATE USER PROFILE 
 	
@@ -90,16 +106,29 @@ public class UserController {
 	public String Update() {
 		return "update.jsp";
 	}
-	@PostMapping(value="/profile/edit")
-	public String EditProfile(@RequestParam("bio")String bio, HttpSession session) {
+	@PostMapping(value="/updateProfile")
+	public String EditProfile(@RequestParam("file") MultipartFile file, @RequestParam("bio")String bio, HttpSession session) {
 		Long id = (Long)session.getAttribute("userId");
 		User userObj = userServ.findUserById(id);
+		String postPath = this.amazonClient.uploadFile(file);
+		userObj.setFilePath(postPath);
 		userObj.setBio(bio);
 		userServ.updateUser(userObj);
 		return "redirect:/profile";
 	}
 	
 
+	//  ADD FRIEND
+	
+	@PostMapping(value="/addFriend/{id}")
+	public String AddFriend(@PathVariable("id") Long id, HttpSession session) {
+		Long userId = (Long)session.getAttribute("userId");
+		User userObj = userServ.findUserById(userId);
+		User friend = userServ.findUserById(id);
+		userObj.getFriends().add(friend);
+		userServ.updateUser(userObj);
+		return "redirect:/dashboard";
+	}
 	
 	
 	//  LOGOUT 

@@ -74,9 +74,13 @@ public class MainController {
 	
 	//  FIND ALL POSTS
 	@GetMapping("/dashboard")
-	public String allPosts(Model model) {
+	public String allPosts(Model model, HttpSession session) {
+		Long id = (Long) session.getAttribute("userId");
+		User userObj = userServ.findUserById(id);
 		List<Post> allPosts = mainServ.findAllPosts();
+		ArrayList<User>friends = userObj.getFriends();
 		model.addAttribute("posts", allPosts);
+		model.addAttribute("friends", friends);
 		return "dashboard.jsp";
 	}
 	//  FIND POST BY TAGS
@@ -137,6 +141,6 @@ public class MainController {
 		newComment.setUser(user);
 		newComment.setComment(comment);
 		mainServ.newComment(newComment);
-		return "redirect:/showPost/{id}";
+		return "redirect:/post/{id}";
 	}
 }

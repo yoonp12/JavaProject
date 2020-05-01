@@ -9,6 +9,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Insert title here</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
@@ -17,13 +18,17 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine" />
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Pacifico" />
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah" />
+	<link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.css">
+	<link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css">
+	
+	<script src="https://unpkg.com/swiper/js/swiper.js"></script>
+	<script src="https://unpkg.com/swiper/js/swiper.min.js"></script>
 	
 </head>
 <body>
 	<div class="container">
-	
-	<!-- NAVBAR -->
-		<nav class="navbar navbar-expand-lg mynav w-100 d-flex justify-content-between">
+		<!-- NAVBAR -->
+		<nav class="navbar navbar-expand-lg mynav w-100 d-flex justify-content-between ">
 			<div class="" id="navbarSupportedContent">
 				<ul class="navbar-nav mr-auto">
 					<li class="nav-item active">
@@ -51,60 +56,101 @@
 			</div>
 			
 		</nav>
-	<!-- NAVBAR END-->
-	
-		<div class="d-flex justify-content-around mt-5">
-			<div class="w-50">
+		<!-- NAVBAR END -->
+		
+		<!-- PROFILE HEADER -->
+		<div class="row d-flex justify-content-around">
+		<!-- FRIEND'S LIST -->		
+			<div class="w-25">
+				<div class="card border-0" id="dashBody1">
+					<div class="card-body border-right">
+						<div class="text-center mb-5">
+							<h5 class="card-title text-center mb-4" id="friendsList"><c:out value="${user.name }" /></h5>
+							<img src="${user.filePath}" alt="..." class="rounded-circle" width="200" height="180">
+						</div>
+						<div class="list-group list-group-flush">
+							<hr />
+							<div>
+								<h6>Username:</h6>
+								<h5><c:out value="${user.userName }" /></h5>
+							</div>
+							<hr />
+							<div>
+								<h6>Email:</h6>
+								<h5><c:out value="${user.email }" /></h5>
+							</div>
+							<hr />
+							<div>
+								<h6>Bio:</h6>
+								<h5><c:out value="${user.bio }" /></h5>
+							</div>
+						
+						</div>
+					</div>
+				</div>
+			</div>
+		<!-- FRIEND'S LIST END -->
+		
+		<!-- ALL POSTS -->
+			<div class="w-75">
 				<h3 id="userPostFont" class="text-center">Poster Board</h3>	
-				<div class="card border-0" id="dashBody">
+				<div class="card border-0" id="dashBody2">
 					<div class="card-body d-flex justify-content-center ">
 					
-					<!--POST INFO -->
-
-
-						<div class="card rounded-lg">
-							<img src="${posts.filePath}" width="400" height="400" class="mb-4 ">
-							<h5 class="text-center"><c:out value="${posts.description }" /></h5>
+					<!-- USER'S POSTS CAROUSEL -->
+							
+					<div class="swiper-container">
+						<div class="swiper-wrapper mb-5">
+						
+						<c:forEach var="post" items="${posts}">
+							<div class="swiper-slide post-slide">
+								<div class="card rounded-lg">
+									<img src="${post.filePath}" width="400" height="400" class="mb-4 ">
+									<h5 class="postDesc"><c:out value="${post.description }" /></h5>
+								<div class="flex-wrap">
+									<c:forEach var="post" items="${posts}">
+										<p>#<c:out value="${post.tags}" />, </p>
+									</c:forEach>
+								</div>
+								</div>
+							</div>
+						</c:forEach>
+							
 						</div>
-
+					<!-- Add Pagination -->
+						<div class="swiper-pagination pt-5"></div>
 					</div>
-					<!--POST INFO-->
-				</div>
-			</div>
-			
-			<div class="w-50 mt-5">
-				<h3 id="userPostFont" class="text-center">Comments</h3>	
-				<div class="card border-0" id="dashBody">
-					<div class="card-body d-flex justify-content-center ">
 					
-					<!--POST INFO -->
-						<div class="card rounded-lg border-0" style="width: 35rem;">
-							<div class="overflow-auto mb-4" style="height: 300px">
-			            		<c:forEach items="${posts.comments}" var="comment">
-			            			<p class="p-3">
-			            			<c:out value="${comment.user.name}"/>
-			            			: <c:out value="${comment.comment}"/>
-			            			</p>
-			            			<hr class="dotted"/>
-			            		</c:forEach>
-			            	</div>
-			            	
-			            	<form action="/postComment/<c:out value='${posts.id}'/>" method="post">
-			            		<div class="form-group">
-			            			<label>Add Comment:</label>
-			            			<textarea name="comment" class="form-control" rows="3"></textarea>
-			            		</div>
-			            		<div class="d-flex justify-content-end">
-			            			<input type="submit" class=" btn my-2 my-sm-0 btn btn-outline-light allBtns" value="Submit"/>
-			            		</div>
-			            	</form>
-						</div>
+					<!-- USER'S POSTS CAROUSEL END -->
 					</div>
-					<!--POST INFO-->
 				</div>
+		<!-- ALL POSTS END -->
+		
 			</div>
+		<!-- DASHBOARD BODY END -->
+		
 		</div>
-	
+		<!-- PROFILE HEADER END -->
+		
 	</div>
+	
+	<script>
+    var swiper = new Swiper('.swiper-container', {
+      effect: 'coverflow',
+      grabCursor: true,
+      centeredSlides: true,
+      slidesPerView: 'auto',
+      coverflowEffect: {
+        rotate: 50,
+        stretch: 0,
+        depth: 100,
+        modifier: 1,
+        slideShadows : true,
+      },
+      pagination: {
+        el: '.swiper-pagination',
+      },
+    });
+	</script>
 </body>
 </html>

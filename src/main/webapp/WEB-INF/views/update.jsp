@@ -25,16 +25,19 @@
 	<nav class="navbar navbar-expand-lg mynav w-100 d-flex justify-content-between ">
 		<div class="" id="navbarSupportedContent">
 			<ul class="navbar-nav mr-auto">
-				<li class="nav-item active">
-					<a class="nav-link navFont m-2" href="#">Profile <span class="sr-only">(current)</span></a>
-				</li>
-				<li class="nav-item active">
-					<a class="nav-link navFont m-2" href="#">Post <span class="sr-only">(current)</span></a>
-				</li>
-				<li class="nav-item active">
-					<a class="nav-link navFont m-2" href="#">Logout <span class="sr-only">(current)</span></a>
-				</li>
-			</ul>
+					<li class="nav-item active">
+						<a class="nav-link navFont m-2" href="/profile">Profile <span class="sr-only">(current)</span></a>
+					</li>
+					<li class="nav-item active">
+						<a class="nav-link navFont m-2" href="/new">Post <span class="sr-only">(current)</span></a>
+					</li>
+					<li class="nav-item active">
+						<a class="nav-link navFont m-2" href="/dashboard">Dashboard <span class="sr-only">(current)</span></a>
+					</li>
+					<li class="nav-item active">
+						<a class="nav-link navFont m-2" href="/logout">Logout <span class="sr-only">(current)</span></a>
+					</li>
+				</ul>
 		</div>
 		<div>
 			<h3 id="projectTitle">PiClique</h3>
@@ -52,25 +55,26 @@
 	<!-- LOGIN -->
 	<div class="card; shadow p-3 mb-5" style="width: 30rem; margin: auto">
 		<div class="card-body; " style="margin: auto; font-family: Verdana;">
-			<h1>Update Profile</h1>
-			<form action="/profile/edit" method="post">
+			<h1 id="userPostFont" >Edit Your Profile</h1>
+			<br />
+			<form method="post" action="/updateProfile" enctype="multipart/form-data" >
 			<div class="form-group">
-			<h1>Hello</h1>
-				<p>
+				<hr />
 				Upload Profile Picture:
-				<br>
-				<input type="file" class="mt-2"/>
-				</p>
+				
+				<input type="file" name="file" class="mt-2"/>
 				<hr>
 				<div class="bio" style="valign: top">
 				Bio:
 				</div>
 				<p>
-				<input  type="text" name="bio" />
+				<textarea rows="3" class="form-control"name="bio" ></textarea>
 				</p>	
 						
 			</div>
-			<button type="submit" class="btn btn-primary">Submit</button>
+			<div class="d-flex justify-content-end">
+				<button type="submit" class="btn my-2 my-sm-0 btn btn-outline-light allBtns">Update</button>
+			</div>
 			</form>
 			<br>
 		</div>
