@@ -1,5 +1,6 @@
 package com.paulyoon.javaproject.models;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -44,6 +45,7 @@ public class User {
     @Transient 
     private boolean duplicate;
     
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
     name = "friendships", 
@@ -84,6 +86,7 @@ public class User {
     public User() {
     }
     
+
     public User(String name, String userName, String filePath, String email, String password, String bio, List<User>friends, List<User>userFriends) {
     	setName(name);
     	setUserName(userName);
@@ -207,6 +210,7 @@ public class User {
 	public void setBio(String bio) {
 		this.bio = bio;
 	}
+
 
 	public String getFilePath() {
 		return filePath;

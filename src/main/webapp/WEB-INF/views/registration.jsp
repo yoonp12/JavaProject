@@ -24,10 +24,10 @@
 		<div class="" id="navbarSupportedContent">
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item active">
-					<a class="nav-link navFont m-2" href="#">Profile <span class="sr-only">(current)</span></a>
+					<a class="nav-link navFont m-2" href="/register">Profile <span class="sr-only">(current)</span></a>
 				</li>
 				<li class="nav-item active">
-					<a class="nav-link navFont m-2" href="#">Post <span class="sr-only">(current)</span></a>
+					<a class="nav-link navFont m-2" href="/register">Post <span class="sr-only">(current)</span></a>
 				</li>
 				<li class="nav-item active">
 					<a class="nav-link navFont m-2" href="/login">Login <span class="sr-only">(current)</span></a>
@@ -35,7 +35,7 @@
 			</ul>
 		</div>
 		<div>
-			<h3 id="projectTitle">PiClique</h3>
+			<h3 id="projectTitle">PicShare</h3>
 		</div>
 		<div>
 			<form action="" method="post" class="form-inline my-2 my-lg-0">

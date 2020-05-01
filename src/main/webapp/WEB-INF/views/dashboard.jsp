@@ -8,7 +8,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
+	<title>Dashboard</title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
@@ -43,7 +43,7 @@
 				</ul>
 			</div>
 			<div>
-				<h3 id="projectTitle">PiClique</h3>
+				<h3 id="projectTitle">PicShare</h3>
 			</div>
 			<div>
 				<form action="/searchTags" method="post" class="form-inline my-2 my-lg-0">
@@ -63,6 +63,15 @@
 				<div class="card border-0" id="dashBody">
 					<div class="card-body border-right">
 						<h5 class="card-title " id="friendsList">My Clique</h5>
+
+					
+						<ul class="list-group list-group-flush">
+							<c:forEach var="friend" items="${friends}" >
+								<li class="list-group-item" ><a href="/profile/${friend.id}"><c:out value="${friend.name}" /></a></li>
+							</c:forEach>
+						</ul>
+						
+
 						<div class="overflow-auto mb-4" style="height: 500px">
 							<ul class="list-group list-group-flush">
 								<c:forEach var="friend" items="${friends}" >
@@ -78,6 +87,7 @@
 								<button class="btn my-2 my-sm-0 btn btn-outline-light allBtns">Add</button>
 							</div>
 						</form>
+
 					</div>
 				</div>
 			</div>
@@ -89,6 +99,19 @@
 					<div class="card-body d-flex flex-wrap ">
 					
 						<c:forEach var="post" items="${posts}">
+
+							<div class="card m-3" id="posts" >
+								<a href="/post/${post.id}"><img src="${post.filePath}" alt="" width="180" height="190"/></a>
+								<h5><c:out value="${post.description }" /></h5>
+								<div style="text-align: center">
+									<form:form action="/post/${post.id }" method="post" >
+										<input type="hidden" name="_method" value="delete">
+										<button class="btn btn-danger btn-sm" type="submit" value="Delete">Delete</button>
+									</form:form>
+								</div>
+							</div>
+							
+
 							<div class="card m-3" id="posts">
 								<a href="/post/${post.id}"><img src="${post.filePath}" alt="" width="200" height="250" class="postPic mb-2"/></a>
 				            	<c:choose>
@@ -117,6 +140,7 @@
 								</div>
 								<h5 class="postDesc text-left"><c:out value="${post.description }" /></h5>
 							</div>
+
 						</c:forEach>
 
 					</div>

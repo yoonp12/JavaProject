@@ -8,7 +8,8 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
+
+	<title><c:out value="${posts.description }" /></title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
@@ -17,13 +18,13 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine" />
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Pacifico" />
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah" />
+
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Patrick+Hand" />
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Patrick+Hand" />
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
 	<div class="container">
-	
 	<!-- NAVBAR -->
 		<nav class="navbar navbar-expand-lg mynav w-100 d-flex justify-content-between">
 			<div class="" id="navbarSupportedContent">
@@ -46,6 +47,7 @@
 				<h3 id="projectTitle">PiClique</h3>
 			</div>
 			<div>
+
 				<form action="/searchTags" method="post" class="form-inline my-2 my-lg-0">
 					<input class="form-control mr-sm-2"  type="search" name="tags" placeholder="Search Tags" aria-label="Search">
 					<button class="btn my-2 my-sm-0 btn btn-outline-light" style="background-color:#6782B4;" type="submit">Search</button>
@@ -59,9 +61,11 @@
 			<div class="w-50">
 				<h3 id="userPostFont" class="text-center">Poster Board</h3>	
 				<div class="card border-0" >
+
 					<div class="card-body d-flex justify-content-center ">
 					
 					<!--POST INFO -->
+
 
 
 						<div class="card rounded-lg" id="posts">
@@ -91,6 +95,7 @@
 								</c:forEach>
 							</div>
 							<h5 class="postDesc text-left"><c:out value="${posts.description }" /></h5>
+
 						</div>
 
 					</div>
@@ -98,12 +103,14 @@
 				</div>
 			</div>
 			
+
 			<div class="w-50">
 				<h3 id="userPostFont" class="text-center">Comments</h3>	
 				<div class="card border-0" id="dashBody">
 					<div class="card-body d-flex justify-content-center ">
 					
 					<!--POST INFO -->
+
 						<div class="card rounded-lg border-0" id="posts"style="width: 35rem;">
 							<div class="overflow-auto mb-4" style="height: 320px">
 			            		<c:forEach items="${posts.comments}" var="comment">
@@ -117,6 +124,7 @@
 			            	
 			            	<form action="/postComment/<c:out value='${posts.id}'/>" method="post">
 			            		<div class="form-group">
+
  									<textarea name="comment" class="form-control" placeholder="Type Comment"rows="3"></textarea>
 			            		</div>
 			            		<div class="d-flex justify-content-end">

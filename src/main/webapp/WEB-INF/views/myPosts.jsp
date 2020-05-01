@@ -8,7 +8,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
+	<title>Post</title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
@@ -46,7 +46,7 @@
 				</ul>
 			</div>
 			<div>
-				<h3 id="projectTitle">PiClique</h3>
+				<h3 id="projectTitle">PicShare</h3>
 			</div>
 			<div>
 				<form action="/searchTags" method="post" class="form-inline my-2 my-lg-0">
@@ -88,6 +88,11 @@
 				</div>
 			</div>
 			
+<<<<<<< HEAD
+		
+
+=======
+>>>>>>> 598ffdc5ba3a611880898383d550ea98c47367a1
 		</div>
 		<!-- DASHBOARD BODY END -->
 		

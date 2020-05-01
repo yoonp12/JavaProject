@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -92,7 +94,6 @@ public class UserController {
 	
 	
 	//  FRIEND'S PROFILE
-	
 	@GetMapping("/profile/{id}")
 	public String Profile(@PathVariable("id") Long id, HttpSession session, Model model) {
 		User friend = userServ.findUserById(id);
@@ -123,6 +124,7 @@ public class UserController {
 
 	//  ADD FRIEND
 	
+
 	@PostMapping(value="/addFriend")
 	public String AddFriend(@RequestParam("username") String username, HttpSession session) {
 		Long userId = (Long)session.getAttribute("userId");

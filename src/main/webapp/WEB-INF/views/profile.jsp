@@ -8,7 +8,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
+	<title>Profile</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
@@ -26,6 +26,9 @@
   	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://unpkg.com/swiper/js/swiper.js"></script>
 	<script src="https://unpkg.com/swiper/js/swiper.min.js"></script>
+	
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	
 </head>
 <body>
@@ -49,7 +52,7 @@
 				</ul>
 			</div>
 			<div>
-				<h3 id="projectTitle">PiClique</h3>
+				<h3 id="projectTitle">PicShare</h3>
 			</div>
 			<div>
 				<form action="/searchTags" method="post" class="form-inline my-2 my-lg-0">
@@ -69,7 +72,9 @@
 					<div class="card-body border-right">
 						<div class="text-center mb-5">
 							<h5 class="card-title text-center mb-4" id="friendsList"><c:out value="${user.name }" /></h5>
-							<img src="${user.filePath}" alt="..." class="rounded-circle" width="200" height="180" id="profilePic">
+
+							<img src="${user.filePath}" alt="..." id="profilePic" class="img-thumbnail" style="width:100%; height:100%;">
+
 						</div>
 						<div class="list-group list-group-flush">
 							<hr />
@@ -87,6 +92,7 @@
 								<h6>Bio:</h6>
 								<h5><c:out value="${user.bio }" /></h5>
 							</div>
+
 							<div class="text-center mt-4">
 								<form action="/update">
 									<button type="submit" class="btn my-2 my-sm-0 btn btn-outline-light allBtns">Update Profile</button>
@@ -111,6 +117,25 @@
 						
 						<c:forEach var="post" items="${posts}">
 							<div class="swiper-slide post-slide">
+								<div class="card rounded-lg">
+									<img src="${post.filePath}" width="400" height="400" class="mb-4 ">
+									<h5 class="postDesc"><c:out value="${post.description }" /></h5>
+								<%-- <div class="flex-wrap">
+									<c:forEach var="post" items="${posts}">
+										<p>#<c:out value="${post.tags}" />, </p>
+									</c:forEach> 
+								</div> --%>
+									
+										<form:form action="/post/${post.id }" method="post" >
+											<div class="text-center">
+												
+												<button class="border-0" value="Delete">
+													<i class="material-icons" id="like">delete_forever</i>
+												</button>
+												<input type="hidden" name="_method" value="delete">
+											</div>
+										</form:form>
+							
 								<div class="card rounded-lg" id="posts">
 									<img src="${post.filePath}" width="360" height="420" class="mb-4 postPic">
 									<c:choose>
@@ -139,15 +164,19 @@
 									</div>
 									<h5 class="postDesc text-left"><c:out value="${post.description }" /></h5>
 								
+
 								</div>
+							</div>
 							</div>
 						</c:forEach>
 							
 						</div>
+						
 					<!-- Add Pagination -->
 						<br />
 						<br />
 						<div class="swiper-pagination pt-5"></div>
+
 					</div>
 					
 					<!-- USER'S POSTS CAROUSEL END -->
